@@ -7,53 +7,41 @@ import { HomePage } from "../HomePage";
 import { LoginPage } from "../LoginPage";
 import { AlbumPage } from "../AlbumPage";
 
-const Index = () => <h2>Home</h2>;
-const About = () => <h2>About</h2>;
-const Users = () => <h2>Users</h2>;
+import classes from "./App.module.css";
+
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+
+function LinkTab(props) {
+  return (
+    <Tab component='a' onClick={event => event.preventDefault()} {...props} />
+  );
+}
 
 class App extends Component {
   render() {
     return (
-      <div className="jumbotron">
+      <div className={classes["background"]}>
+        <AppBar position='static'>
+          <Tabs>
+            <LinkTab label='login' href='login' />
+            <LinkTab label='album' href='album' />
+          </Tabs>
+        </AppBar>
         <div>This is a light header</div>
-        <div className="container">
-          <div className="col-sm-8 col-sm-offset-2">
-            <Router>
-              <div>
-                <PrivateRoute exact path="/" component={HomePage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/album" component={AlbumPage} />
-              </div>
-            </Router>
-          </div>
+        <div className={classes["page-container"]}>
+          <Router>
+            <div>
+              <PrivateRoute exact path='/' component={HomePage} />
+              <Route path='/login' component={LoginPage} />
+              <Route path='/album' component={AlbumPage} />
+            </div>
+          </Router>
         </div>
       </div>
     );
   }
 }
-
-const AppRouter = () => (
-  <Router>
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about/">About</Link>
-          </li>
-          <li>
-            <Link to="/users/">Users</Link>
-          </li>
-        </ul>
-      </nav>
-
-      <Route path="/" exact component={Index} />
-      <Route path="/about/" component={About} />
-      <Route path="/users/" component={Users} />
-    </div>
-  </Router>
-);
 
 export { App };

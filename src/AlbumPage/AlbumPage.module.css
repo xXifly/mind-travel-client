@@ -1,0 +1,13 @@
+.albums-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.album-card {
+    width: 200px;
+    margin: 10px;
+}
+
+.album-card-media {
+    height: 100px;
+}

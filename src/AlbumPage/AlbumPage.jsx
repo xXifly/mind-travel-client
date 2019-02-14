@@ -1,43 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { userService, albumService } from "../_services";
+import albumService from "../_services/album.service";
+
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+
+import classes from "./AlbumPage.module.css";
+import { Typography } from "@material-ui/core";
 
 class AlbumPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      user: {},
-      albums: []
-    };
-  }
+  state = {
+    user: {},
+    albums: [],
+    loadingAlbums: true
+  };
 
   componentDidMount() {
-    this.setState({
-      user: JSON.parse(localStorage.getItem("user")),
-      albums: { loading: true }
+    albumService.getAll().then(reponse => {
+      this.setState({
+        user: JSON.parse(localStorage.getItem("user")),
+        albums: reponse.data,
+        loadingAlbums: false
+      });
     });
-    albumService.getAll().then(albums => this.setState({ albums }));
   }
 
   render() {
-    const { user, albums } = this.state;
     return (
-      <div className="col-md-6 col-md-offset-3">
+      <>
         <h1>Album page</h1>
-        {albums.loading && <em>Loading users...</em>}
-        {albums.length && (
-          <ul>
-            {albums.map((album, index) => (
-              <li key={user.id}>{album.name}</li>
+        {this.state.loadingAlbums ? (
+          <em>Loading albums...</em>
+        ) : (
+          <div className={classes["albums-container"]}>
+            {this.state.albums.map((album, index) => (
+              <Card key={album.id} className={classes["album-card"]}>
+                <CardMedia
+                  className={classes["album-card-media"]}
+                  image='https://picsum.photos/200/100'
+                  title='Contemplative Reptile'
+                />
+                <CardContent>
+                  <Typography>{album.name}</Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size='small'>Learn More</Button>
+                </CardActions>
+              </Card>
             ))}
-          </ul>
+          </div>
         )}
         <p>
-          <Link to="/">Home</Link>
+          <Link to='/'>Home</Link>
         </p>
-      </div>
+        <Button variant='contained' color='primary'>
+          Hello World (^o^)
+        </Button>
+      </>
     );
   }
 }
