@@ -1,24 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import { userService } from "../_services/user.service";
+import { userService } from '../_services/user.service';
 
-class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
+interface IHomePageState {
+  currentUser: any;
+  users: any;
+  isLoadingUsers: boolean;
+}
 
-    this.state = {
-      user: {},
-      users: []
-    };
-  }
+class HomePage extends Component<any, IHomePageState> {
+  state = {
+    currentUser: null,
+    users: null,
+    isLoadingUsers: true
+  };
 
   componentDidMount() {
     this.setState({
-      user: JSON.parse(localStorage.getItem("user")),
-      users: { loading: true }
+      currentUser: JSON.parse(localStorage.getItem('user') || '{}')
     });
-    userService.getAll().then(users => this.setState({ users }));
+    userService.getAll().then((users: any) => this.setState({ users }));
   }
 
   render() {
@@ -32,7 +34,7 @@ class HomePage extends React.Component {
         {users.length && (
           <ul>
             {users.map((user, index) => (
-              <li key={user.id}>{user.firstName + " " + user.lastName}</li>
+              <li key={user.id}>{user.firstName + ' ' + user.lastName}</li>
             ))}
           </ul>
         )}
