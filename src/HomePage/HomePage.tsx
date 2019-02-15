@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { userService } from '../_services/user.service';
+import User from '../_models/user.model';
 
 interface IHomePageState {
-  currentUser: any;
-  users: any;
+  currentUser: User;
+  users: User[];
   isLoadingUsers: boolean;
 }
 
 class HomePage extends Component<any, IHomePageState> {
   state = {
-    currentUser: null,
-    users: null,
+    currentUser: (null as unknown) as User,
+    users: (null as unknown) as User[],
     isLoadingUsers: true
   };
 
@@ -24,16 +25,17 @@ class HomePage extends Component<any, IHomePageState> {
   }
 
   render() {
-    const { user, users } = this.state;
     return (
       <div className='col-md-6 col-md-offset-3'>
-        <h1>Hi {user.firstName}!</h1>
+        <h1>
+          Hi {this.state.currentUser && this.state.currentUser.firstName}!
+        </h1>
         <p>You're logged in with React & Basic HTTP Authentication!!</p>
         <h3>Users from secure api end point:</h3>
-        {users.loading && <em>Loading users...</em>}
-        {users.length && (
+        {this.state.isLoadingUsers && <em>Loading users...</em>}s
+        {this.state.users && this.state.users.length && (
           <ul>
-            {users.map((user, index) => (
+            {this.state.users.map((user: User) => (
               <li key={user.id}>{user.firstName + ' ' + user.lastName}</li>
             ))}
           </ul>
@@ -48,4 +50,4 @@ class HomePage extends Component<any, IHomePageState> {
   }
 }
 
-export { HomePage };
+export default HomePage;

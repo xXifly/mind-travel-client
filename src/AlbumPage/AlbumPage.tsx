@@ -7,9 +7,10 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import classes from './AlbumPage.module.css';
-import { Typography } from '@material-ui/core';
+import { Typography, CircularProgress } from '@material-ui/core';
 import { AxiosResponse } from 'axios';
-import { Album } from '../_models/album.model';
+import Album from '../_models/album.model';
+import { timeout } from 'q';
 
 interface IAlbumPageState {
   user: any;
@@ -26,11 +27,13 @@ class AlbumPage extends Component<any, IAlbumPageState> {
 
   componentDidMount() {
     albumService.getAll().then((response: AxiosResponse) => {
+      console.log('test');
       this.setState({
         user: JSON.parse(localStorage.getItem('user') || '{}'),
-        albums: response.data,
-        isLoadingAlbums: false
+        albums: response.data
+        // isLoadingAlbums: false
       });
+      setTimeout(() => this.setState({ isLoadingAlbums: false }), 1000);
     });
   }
 
@@ -39,7 +42,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
       <>
         <h1>Album page</h1>
         {this.state.isLoadingAlbums ? (
-          <em>Loading albums...</em>
+          <CircularProgress />
         ) : (
           <div className={classes['albums-container']}>
             {this.state.albums.map((album, index) => (
