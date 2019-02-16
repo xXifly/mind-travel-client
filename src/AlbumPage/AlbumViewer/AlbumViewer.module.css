@@ -1,0 +1,6 @@
+/* .gallery-container div div img {
+  object-fit: cover;
+} */
+.ReactGridGallery .tile .tile-viewport img {
+  object-fit: cover;
+}

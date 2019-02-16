@@ -1,5 +1,6 @@
 type Album = {
-  id: number;
-  name: string;
+  key: string;
+  pictures: string[];
+  thumbnail: string;
 };
 export default Album;
