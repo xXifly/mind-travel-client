@@ -42,14 +42,16 @@ class AlbumPage extends Component<any, IAlbumPageState> {
       <>
         <h1>Album page</h1>
         {this.state.isLoadingAlbums ? (
-          <CircularProgress />
+          <div className={classes['circular-container']}>
+            <CircularProgress />
+          </div>
         ) : (
           <div className={classes['albums-container']}>
             {this.state.albums.map((album, index) => (
               <Card key={album.id} className={classes['album-card']}>
                 <CardMedia
                   className={classes['album-card-media']}
-                  image='https://picsum.photos/200/100'
+                  image='https://source.unsplash.com/random/200x100'
                   title='Contemplative Reptile'
                 />
                 <CardContent>
@@ -62,9 +64,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
             ))}
           </div>
         )}
-        <p>
-          <Link to='/'>Home</Link>
-        </p>
+        <p>{/* <Link to='/'>Home</Link> */}</p>
         <Button variant='contained' color='primary'>
           Hello World (^o^)
         </Button>

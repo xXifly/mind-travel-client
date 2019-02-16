@@ -41,9 +41,9 @@ class HomePage extends Component<any, IHomePageState> {
           </ul>
         )}
         <p>
-          <Link to='/login'>Logout</Link>
+          {/* <Link to='/login'>Logout</Link> */}
           <br />
-          <Link to='/album'>Album</Link>
+          {/* <Link to='/album'>Album</Link> */}
         </p>
       </div>
     );

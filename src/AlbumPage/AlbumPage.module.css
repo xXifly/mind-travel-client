@@ -1,13 +1,18 @@
 .albums-container {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .album-card {
-    width: 200px;
-    margin: 10px;
+  width: 200px;
+  margin: 10px;
 }
 
 .album-card-media {
-    height: 100px;
+  height: 100px;
+}
+.circular-container {
+  margin: 100px auto 0 auto;
+  width: 40px;
 }

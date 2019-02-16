@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://127.0.0.1:10010/v1/';
+axios.defaults.baseURL = 'http://127.0.0.1:8080/api/';
 
 function setAuthHeader() {
   // return authorization header with basic auth credentials
