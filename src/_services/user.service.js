@@ -6,7 +6,7 @@ export const userService = {
   getAll
 };
 
-const apiUrl = 'http://127.0.0.1:10010';
+const apiUrl = 'http://192.168.1.42:8080';
 
 function login(username, password) {
   const requestOptions = {
@@ -23,6 +23,8 @@ function login(username, password) {
   return fetch(`${apiUrl}/users/authenticate`, requestOptions)
     .then(handleResponse)
     .then(user => {
+      console.log('TESTEST' + user);
+
       // login successful if there's a user in the response
       if (user) {
         // store user details and basic auth credentials in local storage

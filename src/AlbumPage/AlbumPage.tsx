@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, match } from 'react-router-dom';
 import albumService from '../_services/album.service';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -45,12 +45,13 @@ class AlbumPage extends Component<any, IAlbumPageState> {
     });
   }
 
-  handleSelectAlbum(album: Album) {
+  handleSelectAlbum(album: Album, history: any) {
     this.setState({
       albumSelected: album,
       isAlbumSelected: true
       // isLoading: true
     });
+    history.push('/albums/' + album.key);
   }
 
   render() {
@@ -67,19 +68,25 @@ class AlbumPage extends Component<any, IAlbumPageState> {
           <div className={classes['albums-container']}>
             {this.state.albums.map((album, index) => (
               <Card className={classes['album-card']}>
-                <CardActionArea onClick={() => this.handleSelectAlbum(album)}>
-                  <CardMedia
-                    className={classes['album-card-media']}
-                    image={
-                      'http://192.168.1.42:8080/api/pictures/' +
-                      encodeURIComponent(album.thumbnail)
-                    }
-                    title='Contemplative Reptile'
-                  />
-                  <CardContent>
-                    <Typography>{album.key}</Typography>
-                  </CardContent>
-                </CardActionArea>
+                <Route
+                  // 'history' is used to set url to /albums/:album.key
+                  render={({ history }) => (
+                    <CardActionArea
+                      onClick={() => this.handleSelectAlbum(album, history)}>
+                      <CardMedia
+                        className={classes['album-card-media']}
+                        image={
+                          'http://192.168.1.42:8080/api/pictures/' +
+                          encodeURIComponent(album.thumbnail)
+                        }
+                        title='Contemplative Reptile'
+                      />
+                      <CardContent>
+                        <Typography>{album.key}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  )}
+                />
               </Card>
             ))}
           </div>
