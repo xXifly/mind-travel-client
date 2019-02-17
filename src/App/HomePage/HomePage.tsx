@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { userService } from '../_services/user.service';
-import User from '../_models/user.model';
+import { userService } from '../../_services/user.service';
+import User from '../../_models/user.model';
 
 interface IHomePageState {
   currentUser: User;

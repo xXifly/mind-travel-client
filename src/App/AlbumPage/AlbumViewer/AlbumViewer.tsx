@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Album from '../../_models/album.model';
+import Album from '../../../_models/album.model';
 import IronImage from 'react-image-lazy-load-component';
 import { CircularProgress } from '@material-ui/core';
 // import Gallery from 'react-photo-gallery';
-import Picture from '../../_models/picture.model';
+import Picture from '../../../_models/picture.model';
 import classes from './AlbumViewer.module.css';
 
 import Gallery from 'react-grid-gallery';

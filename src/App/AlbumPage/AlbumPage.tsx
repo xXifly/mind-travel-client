@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Route, match } from 'react-router-dom';
-import albumService from '../_services/album.service';
+import albumService from '../../_services/album.service';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -15,7 +15,7 @@ import {
   Grid
 } from '@material-ui/core';
 import { AxiosResponse, AxiosError } from 'axios';
-import Album from '../_models/album.model';
+import Album from '../../_models/album.model';
 import { timeout } from 'q';
 import AlbumViewer from './AlbumViewer/AlbumViewer';
 import Error from '@material-ui/icons/Error';
@@ -90,7 +90,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
           // TODO place below code in AlbumSelector
           <div className={classes['albums-container']}>
             {this.state.albums.map((album, index) => (
-              <Card className={classes['album-card']}>
+              <Card key={index} className={classes['album-card']}>
                 <Route
                   // 'history' is used to set url to /albums/:album.key
                   render={({ history }) => (
