@@ -10,12 +10,15 @@ import classes from './AlbumPage.module.css';
 import {
   Typography,
   CircularProgress,
-  CardActionArea
+  CardActionArea,
+  Paper,
+  Grid
 } from '@material-ui/core';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import Album from '../_models/album.model';
 import { timeout } from 'q';
 import AlbumViewer from './AlbumViewer/AlbumViewer';
+import Error from '@material-ui/icons/Error';
 
 interface IAlbumPageState {
   user: any;
@@ -23,6 +26,7 @@ interface IAlbumPageState {
   isLoading: boolean;
   isAlbumSelected: boolean;
   albumSelected: Album;
+  hasLoadingFailed: boolean;
 }
 
 class AlbumPage extends Component<any, IAlbumPageState> {
@@ -31,19 +35,32 @@ class AlbumPage extends Component<any, IAlbumPageState> {
     albums: (null as unknown) as Album[],
     isLoading: true,
     isAlbumSelected: false,
-    albumSelected: (null as unknown) as Album
+    albumSelected: (null as unknown) as Album,
+    hasLoadingFailed: false
   };
 
   componentDidMount() {
-    albumService.getAll().then((response: AxiosResponse) => {
-      this.setState({
-        user: JSON.parse(localStorage.getItem('user') || '{}'),
-        albums: response.data,
-        isLoading: false
-      });
-      // setTimeout(() => this.setState({ isLoading: false }), 1000);
-    });
+    this.handleGetAllAlbums();
   }
+
+  handleGetAllAlbums = () => {
+    this.setState({
+      isLoading: true,
+      hasLoadingFailed: false
+    });
+    albumService
+      .getAll()
+      .then((response: AxiosResponse) => {
+        this.setState({
+          user: JSON.parse(localStorage.getItem('user') || '{}'),
+          albums: response.data,
+          isLoading: false
+        });
+      })
+      .catch((error: AxiosError) => {
+        this.setState({ hasLoadingFailed: true, isLoading: false });
+      });
+  };
 
   handleSelectAlbum(album: Album, history: any) {
     this.setState({
@@ -61,6 +78,12 @@ class AlbumPage extends Component<any, IAlbumPageState> {
           <div className={classes['circular-container']}>
             <CircularProgress />
           </div>
+        ) : this.state.hasLoadingFailed ? (
+          <Paper className={classes['error-paper']} elevation={1}>
+            <Error className={classes['error-paper-icon']} />
+            Cannot load albums
+            <Button onClick={this.handleGetAllAlbums}>Retry</Button>
+          </Paper>
         ) : this.state.isAlbumSelected ? (
           <AlbumViewer album={this.state.albumSelected} />
         ) : (

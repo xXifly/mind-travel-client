@@ -1,0 +1,22 @@
+.main {
+}
+
+.paper {
+  display: 'flex';
+  flex-direction: 'column';
+  align-items: 'center';
+  margin: 50px;
+  padding: 50px;
+}
+.avatar {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+}
+.form {
+}
+.submit {
+}
+.title {
+  text-align: center;
+}

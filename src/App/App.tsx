@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from 'react-router-dom';
 
 import PrivateRoute from '../_components/PrivateRoute';
 import HomePage from '../HomePage/HomePage';
@@ -60,60 +65,70 @@ class App extends Component<any, IAppState> {
     return (
       <Router>
         <>
-          <AppBar position='static'>
-            <Toolbar>
-              <Tabs
-                className={classes['toolbar-tabs']}
-                value={this.state.tabIndex}
-                onChange={(e, tabIndex) => this.handleChangeTab(tabIndex)}>
-                <Tab
-                  icon={<Home />}
-                  label='Home'
-                  component={({ innerRef, ...props }) => (
-                    <Link {...props} to='/' />
+          {localStorage.getItem('user') ? (
+            <>
+              <AppBar position='static'>
+                <Toolbar>
+                  <Tabs
+                    className={classes['toolbar-tabs']}
+                    value={this.state.tabIndex}
+                    onChange={(e, tabIndex) => this.handleChangeTab(tabIndex)}>
+                    <Tab
+                      icon={<Home />}
+                      label='Home'
+                      component={({ innerRef, ...props }) => (
+                        <Link {...props} to='/' />
+                      )}
+                    />
+                    <Tab
+                      icon={<Collections />}
+                      label='Albums'
+                      component={({ innerRef, ...props }) => (
+                        <Link {...props} to='/albums' />
+                      )}
+                    />
+                  </Tabs>
+                  {localStorage.getItem('user') && (
+                    <div>
+                      <IconButton
+                        aria-owns={open ? 'menu-appbar' : undefined}
+                        aria-haspopup='true'
+                        onClick={this.handleOpenAccountMenu}
+                        color='inherit'>
+                        <AccountCircle />
+                      </IconButton>
+                      <Menu
+                        id='menu-appbar'
+                        anchorEl={this.state.anchorEl}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right'
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right'
+                        }}
+                        open={Boolean(this.state.anchorEl)}
+                        onClose={this.handleCloseAccountMenu}>
+                        <MenuItem onClick={this.handleCloseAccountMenu}>
+                          Profile
+                        </MenuItem>
+                        <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+                      </Menu>
+                    </div>
                   )}
-                />
-                <Tab
-                  icon={<Collections />}
-                  label='Albums'
-                  component={({ innerRef, ...props }) => (
-                    <Link {...props} to='/albums' />
-                  )}
-                />
-              </Tabs>
-              {localStorage.getItem('user') && (
-                <div>
-                  <IconButton
-                    aria-owns={open ? 'menu-appbar' : undefined}
-                    aria-haspopup='true'
-                    onClick={this.handleOpenAccountMenu}
-                    color='inherit'>
-                    <AccountCircle />
-                  </IconButton>
-                  <Menu
-                    id='menu-appbar'
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right'
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right'
-                    }}
-                    open={Boolean(this.state.anchorEl)}
-                    onClose={this.handleCloseAccountMenu}>
-                    <MenuItem onClick={this.handleCloseAccountMenu}>
-                      Profile
-                    </MenuItem>
-                    <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
-                  </Menu>
-                </div>
-              )}
-            </Toolbar>
-          </AppBar>
-          <Route exact path='/' component={LoginPage} />
-          <Route path='/albums' component={AlbumPage} />
+                </Toolbar>
+              </AppBar>
+              <Route path='/albums' component={AlbumPage} />
+            </>
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/login'
+              }}
+            />
+          )}
+          <Route exact path='/login' component={LoginPage} />
         </>
       </Router>
     );
