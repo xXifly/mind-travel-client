@@ -27,7 +27,7 @@ const AlbumViewer = (props: IAlbumViewerProps) => {
       //   height: 1,
       //   width: randomWitdh
       thumbnail:
-        'http://192.168.1.42:8080/api/pictures/' +
+        'http://192.168.1.42:8080/api/pictures/thumb/' +
         encodeURIComponent(pictureKey),
       //generate a random width to get a masonry effect
       thumbnailWidth: [200, 225, 250, 275, 300][
@@ -38,7 +38,9 @@ const AlbumViewer = (props: IAlbumViewerProps) => {
   });
 
   return (
-    <Gallery images={picturesGallery} enableImageSelection={false} />
+    <div className={classes['gallery']}>
+      <Gallery images={picturesGallery} enableImageSelection={false} />
+    </div>
     //  <div className={classes['gallery-container']}>
     //     <Gallery photos={picturesGallery} />
     //   </div>
