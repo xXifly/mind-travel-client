@@ -77,9 +77,14 @@ class LoginPage extends Component<any, ILoginPageState> {
       return (
         <CssBaseline>
           <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <BeachAccess />
-            </Avatar>
+            <div className={classes['avatar-container']}>
+              <img
+                className={classes['avatar-img']}
+                src='https://i.giphy.com/media/Cgf0AymdEvEVG/giphy.webp'
+                alt='avatar'
+              />
+              {/* <BeachAccess /> */}
+            </div>
             <Typography component='h1' variant='h5' className={classes.title}>
               Sign in
             </Typography>
