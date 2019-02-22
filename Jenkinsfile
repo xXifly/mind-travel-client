@@ -11,6 +11,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
+                sh 'cat ./package.json'
                 sh 'npm install'
                 sh 'npm run build' 
             }
