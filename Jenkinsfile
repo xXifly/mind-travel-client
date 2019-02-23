@@ -12,6 +12,9 @@ pipeline {
         stage('Build') { 
             steps {
                 sh 'cat ./package.json'
+                sh 'ls -al'
+                sh 'pwd'
+                sh 'whoami'
                 sh 'npm install'
                 sh 'npm run build' 
             }
