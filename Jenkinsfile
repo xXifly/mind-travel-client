@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:alpine' 
-            args '-p 3000:3000' 
+            args '-p 5000:5000' 
         }
     }
     environment {
@@ -14,6 +14,7 @@ pipeline {
                 sh 'npm install'
                 sh 'npm run build' 
                 sh 'npm install -g serve'
+                sh 'nohup serve -s build'
             }
         }
     }
