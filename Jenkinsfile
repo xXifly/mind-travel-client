@@ -15,6 +15,7 @@ pipeline {
                 sh 'npm run build' 
                 sh 'npm install -g serve'
                 sh 'nohup serve -s build'
+                sh 'echo "test"'
             }
         }
     }
