@@ -1,0 +1,23 @@
+pipeline {
+    agent {
+        docker {
+            image 'node:alpine' 
+            args '-p 5000:5000 -v mindtravel-client-dev-build:/mindtravel-client-dev-build --name mindtravel-client-dev-jenkins' 
+        }
+    }
+    environment {
+        HOME = '.'
+    }
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'npm install'
+                sh 'npm run build' 
+                
+                sh 'rm -rf /mindtravel-client-dev-build/*'
+                sh 'cp -R ./build/* /mindtravel-client-dev-build'
+                
+            }
+        }
+    }
+}
