@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:alpine' 
-            args '-p 5000:5000 -v mindtravel-prod-build:mind-travel-client/build' 
+            args '-p 5000:5000 -v mindtravel-prod-build:/mind-travel-client/build' 
         }
     }
     environment {
