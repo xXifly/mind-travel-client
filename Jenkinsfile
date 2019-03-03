@@ -14,7 +14,7 @@ pipeline {
                 sh 'npm install'
                 sh 'npm run build' 
                 
-                sh 'rm -rf /mindtravel-client-prod-build'
+                sh 'rm -rf /mindtravel-client-prod-build/*'
                 sh 'cp -R ./build/* /mindtravel-client-prod-build'
                 
             }
