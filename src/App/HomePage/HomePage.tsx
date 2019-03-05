@@ -19,7 +19,7 @@ class HomePage extends Component<any, IHomePageState> {
 
   componentDidMount() {
     this.setState({
-      currentUser: JSON.parse(localStorage.getItem('user') || '{}')
+      currentUser: JSON.parse(localStorage.getItem('jwt') || '{}')
     });
     userService.getAll().then((users: any) => this.setState({ users }));
   }

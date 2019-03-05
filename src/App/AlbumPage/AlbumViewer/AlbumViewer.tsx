@@ -30,12 +30,12 @@ const AlbumViewer = (props: IAlbumViewerProps) => {
 
     picturesGallery.push({
       src:
-        'http://192.168.1.42:8080/api/pictures/' +
+        'http://localhost:8080/api/pictures/' +
         encodeURIComponent(pictureKey),
       //   height: 1,
       //   width: randomWitdh
       thumbnail:
-        'http://192.168.1.42:8080/api/pictures/thumb/' +
+        'http://localhost:8080/api/pictures/thumb/' +
         encodeURIComponent(pictureKey),
       thumbnailWidth: picWidth,
       thumbnailHeight: 200

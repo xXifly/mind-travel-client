@@ -52,7 +52,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
       .getAll()
       .then((response: AxiosResponse) => {
         this.setState({
-          user: JSON.parse(localStorage.getItem('user') || '{}'),
+          user: JSON.parse(localStorage.getItem('jwt') || '{}'),
           albums: response.data,
           isLoading: false
         });
@@ -99,7 +99,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
                       <CardMedia
                         className={classes['album-card-media']}
                         image={
-                          'http://192.168.1.42:8080/api/pictures/' +
+                          'http://localhost:8080/api/pictures/' +
                           encodeURIComponent(album.thumbnail)
                         }
                         title='Contemplative Reptile'

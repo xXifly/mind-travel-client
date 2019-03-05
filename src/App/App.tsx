@@ -29,9 +29,9 @@ class App extends Component<any, IAppState> {
   };
 
   componentDidMount() {
-    console.log(JSON.parse(localStorage.getItem('user') || '{}'));
+    console.log(JSON.parse(localStorage.getItem('jwt') || '{}'));
     this.setState({
-      currentUser: JSON.parse(localStorage.getItem('user') || '{}')
+      currentUser: JSON.parse(localStorage.getItem('jwt') || '{}')
     });
   }
 

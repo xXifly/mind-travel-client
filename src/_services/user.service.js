@@ -1,4 +1,5 @@
 import authHeader from '../_helpers/auth-header';
+import baseService from './base.service';
 
 export const userService = {
   login,
@@ -6,35 +7,43 @@ export const userService = {
   getAll
 };
 
-const apiUrl = 'http://192.168.1.42:8080';
+const apiUrl = 'http://localhost:8080/api';
 
 function login(username, password) {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username,
-      password
+  return baseService
+    .post('/users/authenticate', { username, password })
+    .then(response => {
+      // user.authdata = window.btoa(username + ':' + password);
+      localStorage.setItem('jwt', JSON.stringify(response.data.token));
+      return response.data.token;
     })
-  };
+    .catch(error => console.log(error));
 
-  return fetch(`${apiUrl}/users/authenticate`, requestOptions)
-    .then(handleResponse)
-    .then(user => {
-      console.log('TESTEST' + user);
+  // const requestOptions = {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({
+  //     username,
+  //     password
+  //   })
+  // };
 
-      // login successful if there's a user in the response
-      if (user) {
-        // store user details and basic auth credentials in local storage
-        // to keep user logged in between page refreshes
-        user.authdata = window.btoa(username + ':' + password);
-        localStorage.setItem('user', JSON.stringify(user));
-      }
+  // return fetch(`${apiUrl}/users/authenticate`, requestOptions)
+  //   .then(handleResponse)
+  //   .then(user => {
+  //     console.log('TESTEST' + user);
+  //     // login successful if there's a user in the response
+  //     if (user) {
+  //       // store user details and basic auth credentials in local storage
+  //       // to keep user logged in between page refreshes
+  //       user.authdata = window.btoa(username + ':' + password);
+  //       localStorage.setItem('user', JSON.stringify(user));
+  //     }
 
-      return user;
-    });
+  //     return user;
+  // });
 }
 
 function logout() {

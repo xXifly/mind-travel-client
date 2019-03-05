@@ -65,7 +65,7 @@ class NavBar extends Component {
               )}
             />
           </Tabs>
-          {localStorage.getItem('user') && (
+          {localStorage.getItem('jwt') && (
             <div>
               <IconButton
                 aria-owns={open ? 'menu-appbar' : undefined}

@@ -1,16 +1,24 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://192.168.1.42:8080/api/';
+axios.defaults.baseURL = 'http://localhost:8080/api/';
 
-function setAuthHeader() {
+const setAuthHeader = () => {
   // return authorization header with basic auth credentials
-  let user = JSON.parse(localStorage.getItem('user') || '{}');
-  if (user && user.authdata) {
-    axios.defaults.headers.common['Authorization'] = 'Basic ' + user.authdata;
+  let userToken = JSON.parse(localStorage.getItem('jwt') || '{}');
+  if (userToken) {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + userToken;
   }
-}
+};
 
-export function get(path: string) {
-  setAuthHeader();
-  return axios.get(path);
-}
+const baseService = {
+  get(path: string) {
+    setAuthHeader();
+    return axios.get(path);
+  },
+
+  post(path: string, data: any) {
+    setAuthHeader();
+    return axios.post(path, data);
+  }
+};
+export default baseService;
