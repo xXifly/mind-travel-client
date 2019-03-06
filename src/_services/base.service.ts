@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
@@ -11,9 +11,9 @@ const setAuthHeader = () => {
 };
 
 const baseService = {
-  get(path: string) {
+  get(path: string, config?: AxiosRequestConfig) {
     setAuthHeader();
-    return axios.get(path);
+    return axios.get(path, config);
   },
 
   post(path: string, data: any) {

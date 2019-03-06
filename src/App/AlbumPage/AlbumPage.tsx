@@ -19,6 +19,8 @@ import Album from '../../_models/album.model';
 import { timeout } from 'q';
 import AlbumViewer from './AlbumViewer/AlbumViewer';
 import Error from '@material-ui/icons/Error';
+import pictureService from '../../_services/picture.service';
+import Picture from '../../_components/Picture/Picture';
 
 interface IAlbumPageState {
   user: any;
@@ -56,6 +58,10 @@ class AlbumPage extends Component<any, IAlbumPageState> {
           albums: response.data,
           isLoading: false
         });
+        // // retrieve image thumb data
+        // response.data.forEach((album: Album) => {
+        //   pictureService.getPicture(album.thumbnail);
+        // });
       })
       .catch((error: AxiosError) => {
         this.setState({ hasLoadingFailed: true, isLoading: false });
@@ -98,13 +104,14 @@ class AlbumPage extends Component<any, IAlbumPageState> {
                       onClick={() => this.handleSelectAlbum(album, history)}>
                       <CardMedia
                         className={classes['album-card-media']}
-                        image={
-                          'http://localhost:8080/api/pictures/' +
-                          encodeURIComponent(album.thumbnail)
-                        }
+                        // image={
+                        //   'http://localhost:8080/api/pictures/' +
+                        //   encodeURIComponent(album.thumbnail)
+                        // }
                         title='Contemplative Reptile'
                       />
                       <CardContent>
+                        <Picture pictureKey={album.thumbnail} />
                         <Typography>{album.key}</Typography>
                       </CardContent>
                     </CardActionArea>
