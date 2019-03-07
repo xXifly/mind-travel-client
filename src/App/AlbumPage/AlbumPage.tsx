@@ -11,15 +11,12 @@ import {
   Typography,
   CircularProgress,
   CardActionArea,
-  Paper,
-  Grid
+  Paper
 } from '@material-ui/core';
 import { AxiosResponse, AxiosError } from 'axios';
 import Album from '../../_models/album.model';
-import { timeout } from 'q';
 import AlbumViewer from './AlbumViewer/AlbumViewer';
 import Error from '@material-ui/icons/Error';
-import pictureService from '../../_services/picture.service';
 import Picture from '../../_components/Picture/Picture';
 
 interface IAlbumPageState {
@@ -102,16 +99,11 @@ class AlbumPage extends Component<any, IAlbumPageState> {
                   render={({ history }) => (
                     <CardActionArea
                       onClick={() => this.handleSelectAlbum(album, history)}>
-                      <CardMedia
-                        className={classes['album-card-media']}
-                        // image={
-                        //   'http://localhost:8080/api/pictures/' +
-                        //   encodeURIComponent(album.thumbnail)
-                        // }
-                        title='Contemplative Reptile'
-                      />
                       <CardContent>
-                        <Picture pictureKey={album.thumbnail} />
+                        <Picture
+                          className={classes['album-card-image']}
+                          pictureKey={album.thumbnail}
+                        />
                         <Typography>{album.key}</Typography>
                       </CardContent>
                     </CardActionArea>

@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
-import { userService } from '../../_services/user.service';
+import userService from '../../_services/user.service';
 import classes from './NavBar.module.css';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Collections from '@material-ui/icons/Collections';

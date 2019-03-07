@@ -13,10 +13,7 @@ import HomePage from './HomePage/HomePage';
 import LoginPage from './LoginPage/LoginPage';
 import AlbumPage from './AlbumPage/AlbumPage';
 
-import classes from './App.module.css';
-
 import User from '../_models/user.model';
-import { userService } from '../_services/user.service';
 import NavBar from '../_components/NavBar/NavBar';
 import { render } from 'react-dom';
 interface IAppState {

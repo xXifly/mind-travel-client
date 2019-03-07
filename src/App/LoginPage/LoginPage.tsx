@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { userService } from '../../_services/user.service';
+import userService from '../../_services/user.service';
 import {
   Paper,
   Avatar,

@@ -17,6 +17,12 @@
   width: 40px;
 }
 
+.album-card-image {
+  height: 120px;
+  width: 100%;
+  object-fit: cover;
+}
+
 .error-paper {
   margin: 50px auto 0 auto;
   width: 80%;

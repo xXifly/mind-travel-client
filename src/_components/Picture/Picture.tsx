@@ -1,34 +1,42 @@
 import React, { Component } from 'react';
 import pictureService from '../../_services/picture.service';
 import { AxiosResponse } from 'axios';
+import { getBase64UriFromImage } from '../../_helpers/imageDataUriHelper';
 
 interface IPictureProps {
   // S3 key of the picture
   pictureKey: string;
+  // styles for <img/> component
+  className: string;
 }
 
 interface IPictureState {
-  pictureDataBase84: string;
+  pictureDataBase64: string;
 }
 
 class Picture extends Component<IPictureProps, IPictureState> {
   state = {
-    pictureDataBase84: ''
+    pictureDataBase64: ''
   };
   componentDidMount() {
     pictureService
       .getPicture(this.props.pictureKey)
       .then((response: AxiosResponse) => {
         this.setState({
-          pictureDataBase84:
-            'data:image/jpeg;base64, ' +
-            Buffer.from(response.data, 'binary').toString('base64')
+          pictureDataBase64: getBase64UriFromImage(
+            response.data,
+            response.headers['content-type']
+          )
         });
-        console.log(this.state.pictureDataBase84);
       });
   }
   render() {
-    return <img src={this.state.pictureDataBase84} />;
+    return (
+      <img
+        className={this.props.className}
+        src={this.state.pictureDataBase64}
+      />
+    );
   }
 }
 export default Picture;

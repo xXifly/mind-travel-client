@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { userService } from '../../_services/user.service';
+import userService from '../../_services/user.service';
 import User from '../../_models/user.model';
 
 interface IHomePageState {
@@ -21,7 +21,6 @@ class HomePage extends Component<any, IHomePageState> {
     this.setState({
       currentUser: JSON.parse(localStorage.getItem('jwt') || '{}')
     });
-    userService.getAll().then((users: any) => this.setState({ users }));
   }
 
   render() {
@@ -30,21 +29,8 @@ class HomePage extends Component<any, IHomePageState> {
         <h1>
           Hi {this.state.currentUser && this.state.currentUser.firstName}!
         </h1>
-        <p>You're logged in with React & Basic HTTP Authentication!!</p>
+        <p>You're logged in with React & Bearer token Authentication!!</p>
         <h3>Users from secure api end point:</h3>
-        {this.state.isLoadingUsers && <em>Loading users...</em>}s
-        {this.state.users && this.state.users.length && (
-          <ul>
-            {this.state.users.map((user: User) => (
-              <li key={user.id}>{user.firstName + ' ' + user.lastName}</li>
-            ))}
-          </ul>
-        )}
-        <p>
-          {/* <Link to='/login'>Logout</Link> */}
-          <br />
-          {/* <Link to='/album'>Album</Link> */}
-        </p>
       </div>
     );
   }
