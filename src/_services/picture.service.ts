@@ -6,6 +6,14 @@ const pictureService = {
     return baseService.get('/pictures/' + encodeURIComponent(pictureKey), {
       responseType: 'arraybuffer'
     });
+  },
+  getPictureThumb: (pictureKey: string) => {
+    return baseService.get(
+      '/pictures/thumb/' + encodeURIComponent(pictureKey),
+      {
+        responseType: 'arraybuffer'
+      }
+    );
   }
 };
 
