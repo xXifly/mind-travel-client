@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Link, Route, match } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import albumService from '../../_services/album.service';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import classes from './AlbumPage.module.css';
@@ -11,13 +10,12 @@ import {
   Typography,
   CircularProgress,
   CardActionArea,
-  Paper,
+  Paper
 } from '@material-ui/core';
 import { AxiosResponse, AxiosError } from 'axios';
 import Album from '../../_models/album.model';
 import AlbumViewer from './AlbumViewer/AlbumViewer';
 import Error from '@material-ui/icons/Error';
-import Picture from '../../_components/Picture/Picture';
 
 interface IAlbumPageState {
   user: any;
@@ -35,7 +33,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
     isLoading: true,
     isAlbumSelected: false,
     albumSelected: (null as unknown) as Album,
-    hasLoadingFailed: false,
+    hasLoadingFailed: false
   };
 
   componentDidMount() {
@@ -45,7 +43,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
   handleGetAllAlbums = () => {
     this.setState({
       isLoading: true,
-      hasLoadingFailed: false,
+      hasLoadingFailed: false
     });
     albumService
       .getAll()
@@ -53,7 +51,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
         this.setState({
           user: JSON.parse(localStorage.getItem('jwt') || '{}'),
           albums: response.data,
-          isLoading: false,
+          isLoading: false
         });
         // // retrieve image thumb data
         // response.data.forEach((album: Album) => {
@@ -68,7 +66,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
   handleSelectAlbum(album: Album, history: any) {
     this.setState({
       albumSelected: album,
-      isAlbumSelected: true,
+      isAlbumSelected: true
       // isLoading: true
     });
     history.push('/albums/' + album.key);
@@ -106,7 +104,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
                           encodeURIComponent(album.thumbnail) +
                           '/' +
                           encodeURIComponent(
-                            JSON.parse(localStorage.getItem('jwt') || ''),
+                            JSON.parse(localStorage.getItem('jwt') || '')
                           )
                         }
                         title='Contemplative Reptile'

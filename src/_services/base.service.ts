@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8080/api/';
+export const apiUrl = 'http://localhost:8080/api/';
+
+axios.defaults.baseURL = apiUrl;
 
 const setAuthHeader = () => {
   // return authorization header with basic auth credentials
