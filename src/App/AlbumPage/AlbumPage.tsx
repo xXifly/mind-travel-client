@@ -11,7 +11,7 @@ import {
   Typography,
   CircularProgress,
   CardActionArea,
-  Paper
+  Paper,
 } from '@material-ui/core';
 import { AxiosResponse, AxiosError } from 'axios';
 import Album from '../../_models/album.model';
@@ -35,7 +35,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
     isLoading: true,
     isAlbumSelected: false,
     albumSelected: (null as unknown) as Album,
-    hasLoadingFailed: false
+    hasLoadingFailed: false,
   };
 
   componentDidMount() {
@@ -45,7 +45,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
   handleGetAllAlbums = () => {
     this.setState({
       isLoading: true,
-      hasLoadingFailed: false
+      hasLoadingFailed: false,
     });
     albumService
       .getAll()
@@ -53,7 +53,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
         this.setState({
           user: JSON.parse(localStorage.getItem('jwt') || '{}'),
           albums: response.data,
-          isLoading: false
+          isLoading: false,
         });
         // // retrieve image thumb data
         // response.data.forEach((album: Album) => {
@@ -68,7 +68,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
   handleSelectAlbum(album: Album, history: any) {
     this.setState({
       albumSelected: album,
-      isAlbumSelected: true
+      isAlbumSelected: true,
       // isLoading: true
     });
     history.push('/albums/' + album.key);
@@ -99,11 +99,23 @@ class AlbumPage extends Component<any, IAlbumPageState> {
                   render={({ history }) => (
                     <CardActionArea
                       onClick={() => this.handleSelectAlbum(album, history)}>
+                      <CardMedia
+                        className={classes['album-card-media']}
+                        image={
+                          'http://localhost:8080/api/pictures/' +
+                          encodeURIComponent(album.thumbnail) +
+                          '/' +
+                          encodeURIComponent(
+                            JSON.parse(localStorage.getItem('jwt') || ''),
+                          )
+                        }
+                        title='Contemplative Reptile'
+                      />
                       <CardContent>
-                        <Picture
+                        {/* <Picture
                           className={classes['album-card-image']}
                           pictureKey={album.thumbnail}
-                        />
+                        /> */}
                         <Typography>{album.key}</Typography>
                       </CardContent>
                     </CardActionArea>
