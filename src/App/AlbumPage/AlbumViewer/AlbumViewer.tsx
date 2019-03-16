@@ -16,54 +16,78 @@ interface IAlbumViewerProps {
   album: Album;
 }
 
-const AlbumViewer = (props: IAlbumViewerProps) => {
-  //   const picturesGallery: Picture[] = [];
-  const picturesGallery: any = [];
+interface IAlbumViewerState {
+  picturesGallery: any;
+}
 
-  let widthIterator = 0;
-  let pictureDataBase64 = '';
-  let pictureThumbDataBase64 = '';
-  props.album.pictures.forEach((pictureKey: string) => {
-    pictureService
-      .getPicture(pictureKey)
-      .then((response: AxiosResponse) => {
-        pictureDataBase64 = getBase64UriFromImage(
-          response.data,
-          response.headers['content-type']
-        );
-      })
-      .then(() => {
-        pictureService
-          .getPictureThumb(pictureKey)
-          .then((response: AxiosResponse) => {
-            pictureThumbDataBase64 = getBase64UriFromImage(
-              response.data,
-              response.headers['content-type']
-            );
-          });
-      })
-      .then(() => {
-        //generate a 'random' width to get a masonry effect
-        widthIterator = (widthIterator + 1) % 10;
-        const picWidth = [200, 250, 300, 215, 255, 180, 225, 280, 240, 275][
-          widthIterator
-        ];
+class AlbumViewer extends Component<IAlbumViewerProps, IAlbumViewerState> {
+  state = {
+    picturesGallery: [] as any,
+  };
+  componentDidMount() {
+    let widthIterator = 0;
+    let pictureDataBase64 = '';
+    let pictureThumbDataBase64 = '';
+    this.props.album.pictures.forEach((pictureKey: string) => {
+      pictureService
+        .getPicture(pictureKey)
+        .then((response: AxiosResponse) => {
+          pictureDataBase64 = getBase64UriFromImage(
+            response.data,
+            response.headers['content-type'],
+          );
+        })
+        .then(() => {
+          pictureService
+            .getPictureThumb(pictureKey)
+            .then((response: AxiosResponse) => {
+              pictureThumbDataBase64 = getBase64UriFromImage(
+                response.data,
+                response.headers['content-type'],
+              );
+            })
+            .then(() => {
+              //generate a 'random' width to get a masonry effect
+              widthIterator = (widthIterator + 1) % 10;
+              const picWidth = [
+                200,
+                250,
+                300,
+                215,
+                255,
+                180,
+                225,
+                280,
+                240,
+                275,
+              ][widthIterator];
 
-        picturesGallery.push({
-          src: pictureDataBase64,
-          //   height: 1,
-          //   width: randomWitdh
-          thumbnail: pictureThumbDataBase64,
-          thumbnailWidth: picWidth,
-          thumbnailHeight: 200
+              const newPicture = {
+                src: pictureDataBase64,
+                //   height: 1,
+                //   width: randomWitdh
+                thumbnail: pictureThumbDataBase64,
+                thumbnailWidth: picWidth,
+                thumbnailHeight: 200,
+              };
+
+              this.setState((previousState: IAlbumViewerState) => ({
+                picturesGallery: [...previousState.picturesGallery, newPicture],
+              }));
+            });
         });
-      });
-  });
+    });
+  }
 
-  return (
-    <div className={classes['gallery']}>
-      <Gallery images={picturesGallery} enableImageSelection={false} />
-    </div>
-  );
-};
+  render() {
+    return (
+      <div className={classes['gallery']}>
+        <Gallery
+          images={this.state.picturesGallery}
+          enableImageSelection={false}
+        />
+      </div>
+    );
+  }
+}
 export default AlbumViewer;
