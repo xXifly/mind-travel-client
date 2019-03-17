@@ -11,7 +11,7 @@ import {
   Input,
   FormControlLabel,
   Button,
-  Checkbox
+  Checkbox,
 } from '@material-ui/core';
 import BeachAccess from '@material-ui/icons/BeachAccess';
 
@@ -34,7 +34,7 @@ class LoginPage extends Component<any, ILoginPageState> {
     submitted: false,
     loading: false,
     error: '',
-    redirectToReferrer: false
+    redirectToReferrer: false,
   };
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +65,7 @@ class LoginPage extends Component<any, ILoginPageState> {
       user => {
         this.setState({ loading: false, redirectToReferrer: true });
       },
-      error => this.setState({ error, loading: false })
+      error => this.setState({ error, loading: false }),
     );
   };
 
