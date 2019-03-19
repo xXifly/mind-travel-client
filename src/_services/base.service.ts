@@ -1,8 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import env from '../_helpers/env.helper';
 
-export const apiUrl = 'http://localhost:8080/api/';
-
-axios.defaults.baseURL = apiUrl;
+axios.defaults.baseURL = env.apiEndpoint;
 
 const setAuthHeader = () => {
   // return authorization header with basic auth credentials
@@ -21,6 +20,6 @@ const baseService = {
   post(path: string, data: any) {
     setAuthHeader();
     return axios.post(path, data);
-  }
+  },
 };
 export default baseService;

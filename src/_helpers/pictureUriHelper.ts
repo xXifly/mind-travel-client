@@ -1,10 +1,10 @@
-import { apiUrl } from '../_services/base.service';
+import env from './env.helper';
 
 export const getPictureUri = (pictureKey: string) => {
-  return apiUrl + 'pictures/' + formatParameters(pictureKey);
+  return env.apiEndpoint + '/pictures/' + formatParameters(pictureKey);
 };
 export const getPictureThumbUri = (pictureKey: string) => {
-  return apiUrl + 'pictures/thumb/' + formatParameters(pictureKey);
+  return env.apiEndpoint + '/pictures/thumb/' + formatParameters(pictureKey);
 };
 
 const formatParameters = (pictureKey: string) => {
