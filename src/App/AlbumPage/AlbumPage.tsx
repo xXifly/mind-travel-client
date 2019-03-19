@@ -18,6 +18,7 @@ import AlbumViewer from './AlbumViewer/AlbumViewer';
 import Error from '@material-ui/icons/Error';
 import env from '../../_helpers/env.helper';
 import { getPictureUri } from '../../_helpers/pictureUriHelper';
+import AlbumCreationDialog from './AlbumCreationDialog/AlbumCreationDialog';
 
 interface IAlbumPageState {
   user: any;
@@ -26,6 +27,7 @@ interface IAlbumPageState {
   isAlbumSelected: boolean;
   albumSelected: Album;
   hasLoadingFailed: boolean;
+  openAlbumCreationDialog: boolean;
 }
 
 class AlbumPage extends Component<any, IAlbumPageState> {
@@ -36,6 +38,7 @@ class AlbumPage extends Component<any, IAlbumPageState> {
     isAlbumSelected: false,
     albumSelected: (null as unknown) as Album,
     hasLoadingFailed: false,
+    openAlbumCreationDialog: false,
   };
 
   componentDidMount() {
@@ -91,32 +94,46 @@ class AlbumPage extends Component<any, IAlbumPageState> {
           <AlbumViewer album={this.state.albumSelected} />
         ) : (
           // TODO place below code in AlbumSelector
-          <div className={classes['albums-container']}>
-            {this.state.albums.map((album, index) => (
-              <Card key={index} className={classes['album-card']}>
-                <Route
-                  // 'history' is used to set url to /albums/:album.key
-                  render={({ history }) => (
-                    <CardActionArea
-                      onClick={() => this.handleSelectAlbum(album, history)}>
-                      <CardMedia
-                        className={classes['album-card-media']}
-                        image={getPictureUri(album.thumbnail)}
-                        title='Contemplative Reptile'
-                      />
-                      <CardContent>
-                        {/* <Picture
+          <>
+            <Button
+              variant='outlined'
+              color='primary'
+              onClick={() => this.setState({ openAlbumCreationDialog: true })}>
+              Create a new album
+            </Button>
+            <AlbumCreationDialog
+              open={this.state.openAlbumCreationDialog}
+              handleClose={() =>
+                this.setState({ openAlbumCreationDialog: false })
+              }
+            />
+            <div className={classes['albums-container']}>
+              {this.state.albums.map((album, index) => (
+                <Card key={index} className={classes['album-card']}>
+                  <Route
+                    // 'history' is used to set url to /albums/:album.key
+                    render={({ history }) => (
+                      <CardActionArea
+                        onClick={() => this.handleSelectAlbum(album, history)}>
+                        <CardMedia
+                          className={classes['album-card-media']}
+                          image={getPictureUri(album.thumbnail)}
+                          title='Contemplative Reptile'
+                        />
+                        <CardContent>
+                          {/* <Picture
                           className={classes['album-card-image']}
                           pictureKey={album.thumbnail}
                         /> */}
-                        <Typography>{album.key}</Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  )}
-                />
-              </Card>
-            ))}
-          </div>
+                          <Typography>{album.key}</Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    )}
+                  />
+                </Card>
+              ))}
+            </div>
+          </>
         )}
         <p>{/* <Link to='/'>Home</Link> */}</p>
         {/* <Button variant='contained' color='primary'>
