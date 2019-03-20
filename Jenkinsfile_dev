@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         HOME = '.'
-        REACT_APP_API_URL = 'https://api.dev.mindtravel.maxmd.xyz/api'
+        REACT_APP_API_URL = 'https://api.dev.mindtravel.maxmd.xyz'
     }
     stages {
         stage('Build') { 
