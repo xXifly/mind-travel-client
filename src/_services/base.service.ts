@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import env from '../_helpers/env.helper';
 
-axios.defaults.baseURL = env.apiEndpoint;
+axios.defaults.baseURL = env.apiUrl + '/api';
 
 const setAuthHeader = () => {
   // return authorization header with basic auth credentials

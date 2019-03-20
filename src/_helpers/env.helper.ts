@@ -1,4 +1,4 @@
 const env = {
-  apiEndpoint: process.env.REACT_APP_API_ENDPOINT,
+  apiUrl: process.env.REACT_APP_API_URL,
 };
 export default env;

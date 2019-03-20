@@ -11,6 +11,11 @@ import {
   ListItemText,
   Divider,
   Slide,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  TextField,
 } from '@material-ui/core';
 import classes from './AlbumCreationDialog.module.css';
 import CloseIcon from '@material-ui/icons/Close';
@@ -24,12 +29,11 @@ import AwsS3 from '@uppy/aws-s3';
 interface IAlbumCreationDialogProps {
   open: boolean;
   handleClose: () => void;
+  handleSubmit: (albumName: string) => void;
 }
 
-interface IAlbumCreationDialogState {}
-
-function Transition(props) {
-  return <Slide direction='up' {...props} />;
+interface IAlbumCreationDialogState {
+  albumName: string;
 }
 
 class AlbumCreationDialog extends Component<
@@ -37,48 +41,42 @@ class AlbumCreationDialog extends Component<
   IAlbumCreationDialogState
 > {
   state = {
-    uppy: new Uppy().use(AwsS3, {
-      serverUrl: 'http://localhost:8080/',
-      serverHeaders: {
-        Album: 'test',
-        Authorization:
-          'Bearer ' + JSON.parse(localStorage.getItem('jwt') || '{}'),
-      },
-    }),
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
+    albumName: '',
   };
 
   render() {
     return (
       <Dialog
-        fullScreen
         open={this.props.open}
         onClose={this.props.handleClose}
-        TransitionComponent={Transition}>
-        <AppBar className={classes['appBar']}>
-          <Toolbar>
-            <IconButton
-              color='inherit'
-              onClick={this.props.handleClose}
-              aria-label='Close'>
-              <CloseIcon />
-            </IconButton>
-            <Typography
-              variant='h6'
-              color='inherit'
-              className={classes['flex']}>
-              Sound
-            </Typography>
-            <Button color='inherit' onClick={this.props.handleClose}>
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <Dashboard uppy={this.state.uppy} />
-        npm
+        aria-labelledby='form-dialog-title'>
+        <DialogTitle id='form-dialog-title'>Create an album</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please specify a name for your album, before uploading some
+            pictures.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin='dense'
+            id='albumName'
+            label='Album name'
+            type='text'
+            value={this.state.albumName}
+            onChange={event => this.setState({ albumName: event.target.value })}
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.props.handleClose} color='primary'>
+            Cancel
+          </Button>
+          <Button
+            onClick={() => this.props.handleSubmit(this.state.albumName)}
+            color='primary'>
+            Create &amp; Upload
+          </Button>
+        </DialogActions>
       </Dialog>
     );
   }

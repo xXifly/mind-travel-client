@@ -16,9 +16,9 @@ import { AxiosResponse, AxiosError } from 'axios';
 import Album from '../../_models/album.model';
 import AlbumViewer from './AlbumViewer/AlbumViewer';
 import Error from '@material-ui/icons/Error';
-import env from '../../_helpers/env.helper';
 import { getPictureUri } from '../../_helpers/pictureUriHelper';
 import AlbumCreationDialog from './AlbumCreationDialog/AlbumCreationDialog';
+import PictureUploader from '../../_components/PictureUploader/PictureUploader';
 
 interface IAlbumPageState {
   user: any;
@@ -28,6 +28,8 @@ interface IAlbumPageState {
   albumSelected: Album;
   hasLoadingFailed: boolean;
   openAlbumCreationDialog: boolean;
+  openPictureUploader: boolean;
+  newAlbumName: string;
 }
 
 class AlbumPage extends Component<any, IAlbumPageState> {
@@ -39,6 +41,8 @@ class AlbumPage extends Component<any, IAlbumPageState> {
     albumSelected: (null as unknown) as Album,
     hasLoadingFailed: false,
     openAlbumCreationDialog: false,
+    openPictureUploader: false,
+    newAlbumName: '',
   };
 
   componentDidMount() {
@@ -77,6 +81,12 @@ class AlbumPage extends Component<any, IAlbumPageState> {
     history.push('/albums/' + album.key);
   }
 
+  handleSubmitAlbumCreation = (albumName: string) => {
+    this.setState({ openAlbumCreationDialog: false });
+    this.setState({ newAlbumName: albumName });
+    this.setState({ openPictureUploader: true });
+  };
+
   render() {
     return (
       <>
@@ -106,7 +116,17 @@ class AlbumPage extends Component<any, IAlbumPageState> {
               handleClose={() =>
                 this.setState({ openAlbumCreationDialog: false })
               }
+              handleSubmit={this.handleSubmitAlbumCreation}
             />
+            {this.state.openPictureUploader && (
+              <PictureUploader
+                albumName={this.state.newAlbumName}
+                open={this.state.openPictureUploader}
+                handleClose={() =>
+                  this.setState({ openPictureUploader: false })
+                }
+              />
+            )}
             <div className={classes['albums-container']}>
               {this.state.albums.map((album, index) => (
                 <Card key={index} className={classes['album-card']}>
