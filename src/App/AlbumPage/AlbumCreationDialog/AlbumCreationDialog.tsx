@@ -40,7 +40,8 @@ class AlbumCreationDialog extends Component<
     uppy: new Uppy().use(AwsS3, {
       serverUrl: 'http://localhost:8080/',
       serverHeaders: {
-        authorization:
+        Album: 'test',
+        Authorization:
           'Bearer ' + JSON.parse(localStorage.getItem('jwt') || '{}'),
       },
     }),

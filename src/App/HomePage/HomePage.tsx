@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import userService from '../../_services/user.service';
 import User from '../../_models/user.model';
+import classes from './HomePage.module.css';
+import { Paper, Typography } from '@material-ui/core';
 
 interface IHomePageState {
   currentUser: User;
@@ -14,24 +16,34 @@ class HomePage extends Component<any, IHomePageState> {
   state = {
     currentUser: (null as unknown) as User,
     users: (null as unknown) as User[],
-    isLoadingUsers: true
+    isLoadingUsers: true,
   };
 
   componentDidMount() {
     this.setState({
-      currentUser: JSON.parse(localStorage.getItem('jwt') || '{}')
+      currentUser: JSON.parse(localStorage.getItem('jwt') || '{}'),
     });
   }
 
   render() {
     return (
-      <div className='col-md-6 col-md-offset-3'>
-        <h1>
-          Hi {this.state.currentUser && this.state.currentUser.firstName}!
-        </h1>
-        <p>You're logged in with React & Bearer token Authentication!!</p>
-        <h3>Users from secure api end point:</h3>
-      </div>
+      <>
+        <Paper className={classes['paper']} elevation={1}>
+          <Typography variant='h5' component='h3'>
+            Hello you :D
+          </Typography>
+          <Typography component='p'>
+            This app is currently in development ! I hope you will enjoy it,
+            feel free to share your feedback :)
+          </Typography>
+        </Paper>
+        <div className={classes['animation-container']}>
+          <img
+            className={classes['animation']}
+            src='https://i.giphy.com/media/sQ5jimwRnCqkw/giphy.webp'
+          />
+        </div>
+      </>
     );
   }
 }

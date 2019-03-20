@@ -1,0 +1,14 @@
+.animation-container {
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+.animation {
+  border-radius: 25%;
+  width: 10rem;
+  height: 10rem;
+}
+.paper {
+  padding: 15px;
+  margin: 15px;
+}
