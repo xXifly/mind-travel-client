@@ -19,6 +19,7 @@ import { Uppy } from '@uppy/core';
 import { Dashboard } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
+import AwsS3 from '@uppy/aws-s3';
 
 interface IAlbumCreationDialogProps {
   open: boolean;
@@ -36,7 +37,13 @@ class AlbumCreationDialog extends Component<
   IAlbumCreationDialogState
 > {
   state = {
-    uppy: new Uppy(),
+    uppy: new Uppy().use(AwsS3, {
+      serverUrl: 'http://localhost:8080/',
+      serverHeaders: {
+        authorization:
+          'Bearer ' + JSON.parse(localStorage.getItem('jwt') || '{}'),
+      },
+    }),
   };
 
   handleClickOpen = () => {
@@ -70,6 +77,7 @@ class AlbumCreationDialog extends Component<
           </Toolbar>
         </AppBar>
         <Dashboard uppy={this.state.uppy} />
+        npm
       </Dialog>
     );
   }
