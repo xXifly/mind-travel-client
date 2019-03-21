@@ -5,10 +5,62 @@
 }
 .animation {
   border-radius: 25%;
-  width: 10rem;
-  height: 10rem;
+  width: 5rem;
+  height: 5rem;
 }
 .paper {
   padding: 15px;
   margin: 15px;
+}
+.heart {
+  background-color: red;
+  display: inline-block;
+  height: 60px;
+  margin: 0 20px;
+  position: relative;
+  top: 0;
+  transform: rotate(-45deg) scale(1);
+  width: 60px;
+  cursor: pointer;
+  /* transition: 500ms; */
+}
+.heart:before,
+.heart:after {
+  content: '';
+  background-color: red;
+  border-radius: 50%;
+  height: 60px;
+  position: absolute;
+  width: 60px;
+}
+
+.heart:before {
+  top: -30px;
+  left: 0;
+}
+
+.heart:after {
+  left: 30px;
+  top: 0;
+}
+
+/* .heart:hover {
+  transform: rotate(-45deg) scale(1.2);
+  transition: 500ms;
+} */
+
+.heart-click {
+  animation: clickOnHeart 1000ms;
+}
+
+@keyframes clickOnHeart {
+  0% {
+    transform: rotate(-45deg) scale(1);
+  }
+  50% {
+    transform: rotate(-45deg) scale(2);
+  }
+  100% {
+    transform: rotate(-45deg) scale(1);
+  }
 }

@@ -5,11 +5,13 @@ import userService from '../../_services/user.service';
 import User from '../../_models/user.model';
 import classes from './HomePage.module.css';
 import { Paper, Typography } from '@material-ui/core';
+import * as classnames from 'classnames';
 
 interface IHomePageState {
   currentUser: User;
   users: User[];
   isLoadingUsers: boolean;
+  isHeartClicked: boolean;
 }
 
 class HomePage extends Component<any, IHomePageState> {
@@ -17,6 +19,7 @@ class HomePage extends Component<any, IHomePageState> {
     currentUser: (null as unknown) as User,
     users: (null as unknown) as User[],
     isLoadingUsers: true,
+    isHeartClicked: false,
   };
 
   componentDidMount() {
@@ -24,6 +27,15 @@ class HomePage extends Component<any, IHomePageState> {
       currentUser: JSON.parse(localStorage.getItem('jwt') || '{}'),
     });
   }
+
+  handleClickOnHeart = () => {
+    if (!this.state.isHeartClicked) {
+      this.setState({ isHeartClicked: true });
+      setTimeout(() => {
+        this.setState({ isHeartClicked: false });
+      }, 1000);
+    }
+  };
 
   render() {
     return (
@@ -37,6 +49,16 @@ class HomePage extends Component<any, IHomePageState> {
             feel free to share your feedback :)
           </Typography>
         </Paper>
+        <div className={classes['animation-container']}>
+          <span
+            className={
+              this.state.isHeartClicked
+                ? classnames(classes['heart'], classes['heart-click'])
+                : classes['heart']
+            }
+            onClick={this.handleClickOnHeart}
+          />
+        </div>
         <div className={classes['animation-container']}>
           <img
             className={classes['animation']}
